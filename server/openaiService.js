@@ -7,7 +7,7 @@ import fs from 'fs';
 
 // Creates an OpenAI connection using the provided api key
 const openai = new OpenAI({
-    apiKey: "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"
+    apiKey: "<ENTER API KEY HERE>"
 });
 
 /**
