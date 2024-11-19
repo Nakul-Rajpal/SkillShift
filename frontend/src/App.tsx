@@ -1,11 +1,9 @@
 import "./App.css";
 
-import QueryBox from "./components/QueryBox";
 import QueryForm from "./components/QueryForm";
 import useImage from "./hooks/useImage";
 import useText from "./hooks/useText";
 import { useEffect } from "react";
-import ImageCaptionDisplay from "./components/ImageCaptionDisplay";
 
 function App() {
   const { image, imgError, imgIsLoading } = useImage("");
@@ -18,11 +16,6 @@ function App() {
   return (
     <div>
       {(imgIsLoading || textIsLoading) && <div className="spinner-border" />}
-      {!imgIsLoading && !textIsLoading && (
-        <ImageCaptionDisplay img={image} caption={text} />
-      )}
-      <br />
-      <QueryBox />
       <br />
       <QueryForm />
       <br />

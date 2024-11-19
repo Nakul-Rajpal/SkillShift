@@ -1,22 +1,11 @@
-/**
- * This file contains the defition and logic for the creating a query form component.
- * This includes the submit button as well since this is treated as a form.
- * The component interacts with the backend using pre-defined routes imported from the backend-services module.
- * @author Christopher Curtis
- */
 import { FieldValues, useForm } from "react-hook-form";
 import { z } from "zod";
 import { useState } from "react";
 import {
-  // Backend model route options
-  createResponseService, // Default
-  createParentalService,
-  createExpertResponseService,
-  createLikeService,
+  createResponseService,
 } from "../services/backend-service";
 import ExpandableText from "./ExpandableText";
 
-// This defines the schema for the form used, expand here for form input validation
 const schema = z.object({
   subject: z.string(),
   modifier: z.string(),
@@ -25,13 +14,7 @@ const schema = z.object({
 });
 type FormData = z.infer<typeof schema>;
 
-/**
- * Formats the string in a parsable way for the GPT model on the backend
- * @param subject the subject to ask the GPT model about
- * @param modifier tone modifiers to tailor the response
- * @param additional additional info the for the model to be aware of
- * @return formated string to be sent as query to model
- */
+// Format string for GPT model
 const formatString = (
   subject: string,
   modifier: string,
@@ -43,7 +26,7 @@ const formatString = (
     subject +
     "], answer me with the following tones in mind: [" +
     modifier +
-    "]" + " please ignore these topics: [" + ignore + "]" + 
+    "]" + " please ignore these topics: [" + ignore + "]" +
     ", also please keep this in mind : [" +
     additional +
     "]."
@@ -51,29 +34,32 @@ const formatString = (
 };
 
 /**
- * Creates a query box, interacting with a gpt backend service.
+ * Creates a query box, interacting with a GPT backend service.
  * Created using a React Hook Form, with fields as defined in the above schema.
  * @returns a QueryBox component
  */
 const QueryForm = () => {
   // These variables are used for interacting with the form's state
   const {
-    register, // Tracks the form fields
-    handleSubmit, // Calls the on-submit logic
-    formState: { errors, isValid }, // Tracks errors and wether or not the form is valid
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
   } = useForm<FormData>();
 
-  // These variables trach the state of the component
-  const [isLoading, setIsLoading] = useState(false); // Wether to show loading animation or not
+  const [isLoading, setIsLoading] = useState(false); // Whether to show loading animation or not
   const [error, setError] = useState(""); // The error message (if any)
   const [queryResponse, setQueryResponse] = useState(""); // The most recent query response
 
-  // Handles the on-sumbit logic for the form
+  // Handles the on-submit logic for the form
   const onSubmit = (data: FieldValues) => {
     console.log(data);
-    setIsLoading(true); // Triggers the loading animation
 
-    // Creates post request for backend gpt model
+    // Redirect to a new page immediately after form submission
+    window.location.href = "/results.html"; // Replace with your new page URL if you want redirection
+
+    setIsLoading(true); // Triggers loading animation
+
+    // Creates post request for backend GPT model (this will run after redirection)
     const { request, cancel } = createResponseService().postMessages([
       {
         role: "user",
@@ -84,68 +70,81 @@ const QueryForm = () => {
     // Request is sent
     request
       .then((res) => {
-        // Succesful request logic
+        // Successful request logic
         setQueryResponse(res.data); // We update the most recent query response
         console.log(res.data);
-        setIsLoading(false); // We stop the loading animation
+        setIsLoading(false); // Stop loading animation
+
       })
       .catch((err) => {
         // Error handling logic
-        setError(err.message); // We display the error message
-        setIsLoading(false); // We stop the loading animation
+        setError(err.message); // Display error message
+        setIsLoading(false); // Stop loading animation
       });
   };
 
-  // We return the react markup needed for the component
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         {error && <p className="text-danger">{error}</p>}
-        <p>Ask me about something</p>
+        
+        {/* Adding back all the questions */}
         <div className="mb-3">
           <label htmlFor="subject" className="form-label">
-            What do you want to ask me about?
+            Please enter your name, gender, and age.
           </label>
-          <input
-            {...register("subject")}
-            id="subject"
-            type="text"
-            className="form-control"
-          />
+          <input {...register("subject")} id="subject" type="text" className="form-control" />
 
           <label htmlFor="modifier" className="form-label">
-            Describe the tone you want the response in:
+            What is your current job title or role?
           </label>
-          <input
-            {...register("modifier")}
-            id="modifier"
-            type="text"
-            className="form-control"
-          />
+          <input {...register("modifier")} id="modifier" type="text" className="form-control" />
 
-          <label htmlFor="additional" className="form-label">
-            Is there anything else you want me to know about?:
+          <label htmlFor="additional1" className="form-label">
+            What skills do you currently have?
           </label>
-          <input
-            {...register("additional")}
-            id="additional"
-            type="text"
-            className="form-control"
-          />
-          <label htmlFor="ignore" className="form-label">
-            What topics do you want me to ignore?: 
+          <input {...register("modifier")} id="additional1" type="text" className="form-control" />
+
+          <label htmlFor="ignore1" className="form-label">
+            What industries are you interested in transitioning into?
           </label>
-          <input
-            {...register("ignore")}
-            id="ignore"
-            type="text"
-            className="form-control"
-            />
+          <input {...register("modifier")} id="ignore1" type="text" className="form-control" />
+
+          <label htmlFor="additional2" className="form-label">
+            What challenges are you facing in your career transition?
+          </label>
+          <input {...register("modifier")} id="additional2" type="text" className="form-control" />
+
+          <label htmlFor="additional3" className="form-label">
+            What additional skills or knowledge do you think you need?
+          </label>
+          <input {...register("modifier")} id="additional3" type="text" className="form-control" />
+
+          <label htmlFor="additional4" className="form-label">
+            Are there any specific job roles you're aiming for?
+          </label>
+          <input {...register("modifier")} id="additional4" type="text" className="form-control" />
+
+          <label htmlFor="additional5" className="form-label">
+            How soon are you planning to make this career transition?
+          </label>
+          <input {...register("modifier")} id="additional5" type="text" className="form-control" />
+
+          <label htmlFor="additional6" className="form-label">
+            Do you have any preferences regarding remote or in-office work?
+          </label>
+          <input {...register("modifier")} id="additional6" type="text" className="form-control" />
+
         </div>
+
+        {/* Submit Button */}
         <button className="btn btn-primary mb-3">Submit</button>
+
+        {/* Loading Spinner */}
+        {isLoading && <div className="spinner-border"></div>}
       </form>
 
-      {isLoading && <div className="spinner-border"></div>}
+      {/* Display query response */}
       <ExpandableText>{queryResponse}</ExpandableText>
     </div>
   );

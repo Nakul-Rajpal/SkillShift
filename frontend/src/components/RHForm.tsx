@@ -1,7 +1,6 @@
 /**
  * This class is included for reference.
  * It contains how to make a React Hook Form with input field validation.
- * @author Christopher Curtis
  */
 import { FieldValues, useForm } from "react-hook-form";
 import { z } from "zod";
