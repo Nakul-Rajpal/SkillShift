@@ -6,8 +6,7 @@
  */
 import express from'express';
 import cors from "cors";
-import expertContext from "./expertcontext.js";
-import { getLlamaResponse } from './openaiService.js';
+import { getResponse } from './openaiService.js';
 
 // This message history is used for testing
 const DEFAULT_MESSAGE_HISTORY = [{"role": "user", "content": "Hello!"}, {"role": "assistant", "content": "Howdy!"}, {"role": "assistant", "content": "Repeat the message history to me!"}];
@@ -37,7 +36,7 @@ app.get('/', (req,res) => {
 // NOTE: Sometimes the gpt model may misunderstand this request, and should be rerun
 app.get('/messageHitoryTest', async (req,res) => {
   console.log("Testing Message History Response");
-  const response = await getLlamaResponse(DEFAULT_MESSAGE_HISTORY);
+  const response = await getResponse(DEFAULT_MESSAGE_HISTORY);
   res.send(response);
 });
 
@@ -46,7 +45,7 @@ app.post('/response', async (req,res) => {
   //console.log("REQUST:", req.body);
   const { messages } = req.body.params;
   console.log("MESSAGES", messages);
-  const response = await getLlamaResponse(messages);
+  const response = await getResponse(messages);
   res.send(response.choices[0].message.content);
 });
 
@@ -56,7 +55,7 @@ app.post('/parental', async (req,res) => {
   const { messages } = req.body.params;
   const newMessages = [...PARENTAL_CONTEXT, ...messages];
   console.log(newMessages);
-  const response = await getLlamaResponse(newMessages);
+  const response = await getResponse(newMessages);
   res.send(response.choices[0].message.content);
 });
 
@@ -66,7 +65,7 @@ app.post('/riddle', async (req,res) => {
   const { messages } = req.body.params;
   const newMessages = [...CONTEXT, ...messages];
   console.log(newMessages);
-  const response = await getLlamaResponse(newMessages);
+  const response = await getResponse(newMessages);
   res.send(response.choices[0].message.content);
 });
 
@@ -76,7 +75,7 @@ app.post('/expert', async (req,res) => {
   const { messages } = req.body.params;
   const newMessages = [expertContext, ...messages];
   console.log(newMessages);
-  const response = await getLlamaResponse(newMessages);
+  const response = await getResponse(newMessages);
   res.send(response.choices[0].message.content);
 });
 

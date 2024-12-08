@@ -7,7 +7,7 @@ import fs from 'fs';
 
 // Creates an OpenAI connection using the provided api key
 const openai = new OpenAI({
-    apiKey: "<ENTER API KEY HERE>"
+    apiKey: ""
 });
 
 /**
@@ -17,10 +17,17 @@ const openai = new OpenAI({
  * @returns Llama response object.
  */
 
-const getLlamaResponse =  async (messages) => await openai.chat.completions.create({
-    model: "gpt-3.5-turbo",
+const getResponse =  async (messages) => await openai.chat.completions.create({
+    model: "gpt-4o-mini",
     messages: messages,
 });
 
+function base64_encode(file) {
+    // read binary data
+    var bitmap = fs.readFileSync(file);
+    // convert binary data to base64 encoded string
+    return new Buffer(bitmap).toString('base64');
+}
 
-export { getLlamaResponse };
+
+export { getResponse };

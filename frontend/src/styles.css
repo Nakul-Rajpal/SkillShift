@@ -1,0 +1,171 @@
+/* General app container */
+.app-container {
+    background-color: #121212;
+    font-family: 'Roboto', sans-serif;
+    max-width: 100%; /* Fullscreen width */
+    margin: 0;
+    padding: 40px;  /* Doubled padding for larger appearance */
+    min-height: 100vh; /* Fullscreen height */
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+.description {
+    font-size: 32px;
+}
+
+.body {
+    background-color: #121212;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    font-size: 32px; /* Double default font size */
+}
+
+.grid-container {
+    background-color: #121212;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: auto auto auto;
+    gap: 40px; /* Doubled gap for larger spacing */
+    padding: 40px; /* Doubled padding for grid container */
+}
+
+.left-box, .right-box {
+    background-color: #1a1a1a; /* Darker box background */
+    padding: 40px;  /* Double the padding */
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.5);
+    color: #ffffff;
+    font-size: 32px; /* Double the font size */
+}
+
+h2 {
+    margin-top: 0;
+    color: #bb86fc; /* Accent color for headings */
+    font-size: 64px; /* Double heading size */
+}
+
+ul li {
+    list-style-type: none;
+    margin-bottom: 20px; /* Double margin bottom for spacing */
+    font-size: 32px; /* Double font size */
+}
+
+ul li::before {
+    content: "• ";
+    color: #bb86fc; /* Accent color for bullet points */
+    font-size: 32px; /* Double bullet size */
+}
+
+@media (max-width: 768px) {
+    .grid-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+    }
+
+    .right-box {
+        grid-row: auto;
+    }
+}
+
+/* Add a black background color to the top navigation */
+.topnav {
+    background-color: #333;
+    overflow: hidden;
+  }
+  
+  /* Style the links inside the navigation bar */
+  .topnav a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  
+  /* Change the color of links on hover */
+  .topnav a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+  
+  /* Add a color to the active/current link */
+  .topnav a.active {
+    background-color: #143f30;
+    color: white;
+  }
+
+/* Form Styling */
+form {
+    background-color:#1a1a1a; /* Dark form background to match theme */
+    border-radius: 10px;
+    padding: 40px; /* Double padding */
+    width: calc(100% - 80px); /* Adjust width for doubled padding */
+    margin: 0 auto;
+    max-width: none;
+    color: #ffffff;
+    font-size: 32px; /* Double form text size */
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 24px; /* Double padding */
+    margin-bottom: 30px; /* Double margin bottom */
+    border-radius: 5px;
+    border:none; 
+    font-size: 32px; /* Double input font size */
+}
+
+input[type="text"]:focus {
+   border-color:#bb86fc; 
+   outline:none;
+}
+
+button[type="submit"] {
+   background-color:#bb86fc; 
+   color:white;
+   padding:24px; 
+   border-radius:5px;
+   border:none;
+   cursor:pointer;
+   font-size:32px; 
+}
+
+button[type="submit"]:hover {
+   background-color:#9b6bc7; 
+}
+
+.text-danger {
+   color:#ff5252; 
+   font-size:32px; 
+}
+
+.spinner-border {
+   display:block;
+   margin:auto;
+}
+
+form p {
+   text-align:center; 
+   font-size:64px; 
+   margin-bottom :40px ; 
+}
+
+.expandable-text {
+    background-color:#1a1a1a ; 
+    padding: 40 px ; 
+    margin-top: 40 px ; 
+    width: calc(100 - 80px);
+    border-radius: 10 px ; 
+    box-shadow: rgba(0, 0 ,0 ,0.15 ) -4 px -4 px -8 px inset ;
+    max-width:none ; 
+    font-size :32 px ; 
+ }
+
+.expandable-text p {
+   text-align:center ; 
+   color:#ffffff ; 
+   font-size :32 px ; 
+}

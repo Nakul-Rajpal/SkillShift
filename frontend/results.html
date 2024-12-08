@@ -4,59 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Career Transition Dashboard</title>
-  <style>
-    /* Basic styling for the page */
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f4f4f9;
-    }
-
-    /* Grid layout for the dashboard */
-    .grid-container {
-      display: grid;
-      grid-template-columns: 1fr 3fr; /* Two columns: narrow left and wider right */
-      grid-template-rows: auto auto auto; /* Three rows for the left column */
-      gap: 20px; /* Space between the grid items */
-      padding: 20px;
-    }
-
-    /* Styling for the boxes in the left column */
-    .left-box {
-      background-color: #e9ecef;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-    }
-
-    /* Styling for the box in the right column */
-    .right-box {
-      grid-row: span 3; /* Spans all three rows on the right */
-      background-color: #e9ecef;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-    }
-
-    /* Headings inside each section */
-    h2 {
-      margin-top: 0;
-    }
-    
-    /* Adjust layout for smaller screens */
-    @media (max-width: 768px) {
-      .grid-container {
-        grid-template-columns: 1fr; /* Stack all sections vertically */
-        grid-template-rows: auto; /* Fit rows to content */
-      }
-
-      .right-box {
-        grid-row: auto; /* Remove spanning when stacked */
-      }
-    }
-    
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
@@ -65,36 +13,52 @@
   <!-- Section: Future Industries -->
   <div class="left-box">
     <h2>Your Future Industries</h2>
-    <p>Details about industries where your skills and interests are a good match.</p>
+    <p id="future-industries">Details about industries where your skills and interests are a good match.</p>
   </div>
 
   <!-- Section: Skills Needed -->
   <div class="left-box">
     <h2>Skills Needed</h2>
-    <p>Key skills to develop for entering your chosen industries.</p>
+    <p id="skills-content">Key skills to develop for entering your chosen industries.</p>
   </div>
 
   <!-- Section: Job Market Stats -->
   <div class="left-box">
     <h2>Stats About the Job Market</h2>
-    <p>Data on job trends and opportunities in your areas of interest.</p>
+    <p id="job-market-stats">Data on job trends and opportunities in your areas of interest.</p>
   </div>
 
   <!-- Section: Online Courses -->
   <div class="right-box">
     <h2>Online Courses</h2>
-    <p>A selection of courses to help you build the skills needed for your career goals.</p>
-    
-    <ul>
-      <li>Course A - Introduction to AI</li>
-      <li>Course B - Data Science Bootcamp</li>
-      <li>Course C - Web Development Fundamentals</li>
-      <!-- Add more courses here -->
-    </ul>
-    
+    <ul id="online-courses"></ul>
   </div>
 
 </div>
+<script>
+  window.addEventListener('load', () => {
+    const futureIndustries = localStorage.getItem('futureIndustries');
+    const jobMarketStats = localStorage.getItem('jobMarketStats');
+    const skillsNeeded = localStorage.getItem('skillsNeeded');
+    const onlineCourses = localStorage.getItem('onlineCourses');
+
+    if (futureIndustries && jobMarketStats && skillsNeeded && onlineCourses) {
+      document.getElementById('future-industries').textContent = futureIndustries;
+      document.getElementById('job-market-stats').textContent = jobMarketStats;
+      document.getElementById('skills-content').textContent = skillsNeeded;
+      
+      const coursesList = document.getElementById('online-courses');
+      coursesList.innerHTML = onlineCourses.split('\n').map(course => `<li>${course}</li>`).join('');
+      
+      localStorage.removeItem('futureIndustries');
+      localStorage.removeItem('jobMarketStats');
+      localStorage.removeItem('skillsNeeded');
+      localStorage.removeItem('onlineCourses');
+    } else {
+      document.getElementById('skills-content').textContent = 'No results available.';
+    }
+  });
+</script>
 <script type="module" src="/src/main.tsx"></script>
 </body>
 </html>

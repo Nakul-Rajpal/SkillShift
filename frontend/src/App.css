@@ -1,81 +1,131 @@
-/* General form styling */
+/* General app container */
+.app-container {
+  font-family: 'Roboto', sans-serif;
+  max-width: 100%; /* Fullscreen width */
+  margin: 0;
+  padding: 20px;
+  background-color: #333; /* Dark input background */
+  min-height: 100vh; /* Fullscreen height */
+  box-sizing: border-box;
+}
+
+.body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #333; /* Dark input background */
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-template-rows: auto auto auto;
+  gap: 20px;
+  padding: 20px;
+  color: #121212
+}
+
+.left-box, .right-box {
+  background-color: #1a1a1a; /* Darker box background */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.h2 {
+  margin-top: 0;
+  color: #bb86fc; /* Accent color for headings */
+}
+
+.ul li {
+  list-style-type: none;
+  margin-bottom: 10px;
+}
+
+.ul li::before {
+  content: "• ";
+  color: #bb86fc; /* Accent color for bullet points */
+}
+
+@media (max-width: 768px) {
+  .grid-container {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+  }
+
+  .right-box {
+      grid-row: auto;
+  }
+}
+
+/* Form Styling */
 form {
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    padding: 20px;
-    width: calc(100% - 40px); /* Make the form span nearly full width, leaving 20px padding on each side */
-    margin: 0 auto; /* Center the form horizontally */
-    max-width: none; /* Remove any max-width constraint */
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Input fields */
-  input[type="text"] {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 15px;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    transition: border-color 0.3s ease-in-out;
-  }
-  
-  input[type="text"]:focus {
-    border-color: #007bff;
-    outline: none;
-  }
-  
-  /* Submit button */
-  button[type="submit"] {
-    background-color: #007bff;
-    color: white;
-    padding: 12px;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  button[type="submit"]:hover {
-    background-color: #0056b3;
-  }
-  
-  /* Error message styling */
-  .text-danger {
-    color: red;
-  }
-  
-  /* Loading spinner */
-  .spinner-border {
-    display: block;
-    margin: auto;
-  }
-  
-  /* Centering question text in form */
-  form p {
-      text-align: center; /* Centers the question prompts in the form */
-      font-size: larger; /* Optional to make it more readable */
-      margin-bottom: 20px; /* Adds space between questions and inputs */
-  }
-  
-  /* Expandable text area (response box) */
-  .expandable-text {
-      background-color: #f1f1f1;
-      padding: 20px; /* Padding inside the box */
-      margin-top:20px; /* Adds space above the response box */
-    
-      /* Make it span nearly the full width of the screen */
-      width: calc(100% - 40px); /* Subtracting padding (20px on each side) to avoid touching edges */
-  
-      border-radius: 10px; /* Rounded corners */
-  
-      box-shadow: rgba(0,0,0,0.15) 
-      -4px -4px -8px inset;
-  
-      max-width:none; /* Ensure it spans full width on larger screens */
-  }
-  
-  /* Centering text inside response box */
-  .expandable-text p {
-      text-align:center; /* Centers the text inside the response box*/
-  }
+  background-color: #333; /* Dark input background */
+  border-radius: 10px;
+  padding: 20px;
+  width: calc(100% - 40px);
+  margin: 0 auto;
+  max-width: none;
+  color: #333; /* Dark input background */
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: none; /* Simplified input style */
+  border-radius: 5px;
+  font-size: 16px;
+  transition: border-color 0.3s ease-in-out;
+  color: #ffffff; /* White input text color */
+}
+
+input[type="text"]:focus {
+  border-color: #bb86fc; /* Accent color for focus */
+  outline: none;
+}
+
+button[type="submit"] {
+  background-color: #bb86fc; /* Accent button color */
+  color: white;
+  padding: 12px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button[type="submit"]:hover {
+  background-color: #9b6bc7; /* Slightly darker on hover */
+}
+
+.text-danger {
+  color: #ff5252; /* Bright red for errors */
+}
+
+.spinner-border {
+  display: block;
+  margin: auto;
+}
+
+form p {
+  text-align: center; 
+  font-size: larger; 
+  margin-bottom: 20px; 
+}
+
+.expandable-text {
+  background-color: #1a1a1a; /* Match with form and box background */
+  padding: 20px; 
+  margin-top:20px; 
+  width: calc(100% - 40px); 
+  border-radius: 10px; 
+  box-shadow: rgba(0,0,0,0.15) -4px -4px -8px inset;
+
+  max-width:none; 
+}
+
+.expandable-text p {
+  text-align:center; 
+  color:#ffffff; /* Ensure expandable text is white */
+}

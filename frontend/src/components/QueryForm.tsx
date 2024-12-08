@@ -7,31 +7,66 @@ import {
 import ExpandableText from "./ExpandableText";
 
 const schema = z.object({
-  subject: z.string(),
-  modifier: z.string(),
+  info: z.string(),
+  job: z.string(),
+  skills: z.string(),
+  industries: z.string(),
+  challenges: z.string(),
   additional: z.string(),
-  ignore: z.string(),
+  specific: z.string(),
+  time: z.string(),
+  pref: z.string(),
 });
+
 type FormData = z.infer<typeof schema>;
 
 // Format string for GPT model
 const formatString = (
-  subject: string,
-  modifier: string,
+  info: string,
+  job: string,
+  skills: string,
+  industries: string,
+  challenges: string,
   additional: string,
-  ignore: string
+  specific: string,
+  time: string,
+  pref: string
 ) => {
   return (
-    "Tell me about: [" +
-    subject +
-    "], answer me with the following tones in mind: [" +
-    modifier +
-    "]" + " please ignore these topics: [" + ignore + "]" +
-    ", also please keep this in mind : [" +
-    additional +
-    "]."
+    `You are a system that is designed to help gig workers transition to a new job.
+
+    SOME ESSENTIAL INFORMATION: if users type NA or nothing, then there is no response for that category. You will not mention that there is no response, just do not use the information.
+
+    FOR ALL OF THESE RESPONSES MAKE THE RESPONSES VERY IN DEPTH. FOR THE ONLINE COURSES PROVIDE AT LEAST 5 LINKS. DO NOT PROVIDE ANY TITLES OR INTRODUCTION TO THE SECTIONS JUST PRINT THE FOUR DESCRIPTIONS
+
+    This is the information of the users: [${info}].
+    This is the current job title/role that this user holds: [${job}].
+    This is their current skills: [${skills}]
+    This is the industries that they are interested in transitioning into (THIS SHOULD NOT HOLD RESPONSES DOWN: if users cannot translate their current skills into this industry, let them know and suggest other industries): [${industries}].
+    These are the current challenges they are experiencing: [${challenges}].
+    These are additional skills/knowledge the user might think they need: [${additional}].
+    These are specific job roles that the user is looking to go into: [${specific}].
+    This is how soon the user wants to transition: [${time}].
+    These are the user preferences regarding remote/in-office work. [${pref}].
+
+    Provide the following response separated by '---'
+
+    futureIndustries: List potential industries that align with the user's skills and interests, 
+    including both current capabilities and aspirations. 
+    Suggest industries that are growing and have a demand for the skills the user possesses or is interested in acquiring.
+
+    jobMarketStats: Provide detailed statistics about both the current job market the user is in and the market they are considering transitioning into. 
+    Include data on employment rates, growth projections, and demand for specific roles within these markets.
+
+    skillsNeeded: Enumerate essential skills required for transitioning into the future industries identified. 
+    Categorize these skills into technical, soft, and industry-specific skills, explaining their importance and application to target roles or industries.
+
+    onlineCourses: Recommend at least five online courses from reputable platforms that can help the user acquire necessary skills for their career transition. 
+    Include links to each course and describe what each course offers, including any certifications or credentials awarded upon completion.
+    `
   );
 };
+
 
 /**
  * Creates a query box, interacting with a GPT backend service.
@@ -52,88 +87,82 @@ const QueryForm = () => {
 
   // Handles the on-submit logic for the form
   const onSubmit = (data: FieldValues) => {
-    console.log(data);
-
-    // Redirect to a new page immediately after form submission
-    window.location.href = "/results.html"; // Replace with your new page URL if you want redirection
-
-    setIsLoading(true); // Triggers loading animation
-
-    // Creates post request for backend GPT model (this will run after redirection)
-    const { request, cancel } = createResponseService().postMessages([
+    setIsLoading(true);
+  
+    const { request } = createResponseService().postMessages([
       {
         role: "user",
-        content: formatString(data.subject, data.modifier, data.additional, data.ignore),
+        content: formatString(data.info, data.job, data.skills, data.industries, data.challenges, data.additional, data.specific, data.time, data.pref),
       },
     ]);
-
-    // Request is sent
+  
     request
       .then((res) => {
-        // Successful request logic
-        setQueryResponse(res.data); // We update the most recent query response
-        console.log(res.data);
-        setIsLoading(false); // Stop loading animation
-
+        const sections = res.data.split('---');
+        localStorage.setItem('futureIndustries', sections[0]);
+        localStorage.setItem('jobMarketStats', sections[1]);
+        localStorage.setItem('skillsNeeded', sections[2]);
+        localStorage.setItem('onlineCourses', sections[3]);
+        window.open('/results.html', '_blank');
+        setIsLoading(false);
       })
       .catch((err) => {
-        // Error handling logic
-        setError(err.message); // Display error message
-        setIsLoading(false); // Stop loading animation
+        setError(err.message);
+        setIsLoading(false);
       });
   };
 
   return (
     <div>
+      
       <form onSubmit={handleSubmit(onSubmit)}>
         {error && <p className="text-danger">{error}</p>}
-        
-        {/* Adding back all the questions */}
+    
         <div className="mb-3">
           <label htmlFor="subject" className="form-label">
             Please enter your name, gender, and age.
           </label>
-          <input {...register("subject")} id="subject" type="text" className="form-control" />
+          <input {...register("info")} id="subject" type="text" className="form-control" />
 
           <label htmlFor="modifier" className="form-label">
             What is your current job title or role?
           </label>
-          <input {...register("modifier")} id="modifier" type="text" className="form-control" />
+          <input {...register("job")} id="modifier" type="text" className="form-control" />
 
           <label htmlFor="additional1" className="form-label">
             What skills do you currently have?
           </label>
-          <input {...register("modifier")} id="additional1" type="text" className="form-control" />
+          <input {...register("skills")} id="additional1" type="text" className="form-control" />
 
           <label htmlFor="ignore1" className="form-label">
             What industries are you interested in transitioning into?
           </label>
-          <input {...register("modifier")} id="ignore1" type="text" className="form-control" />
+          <input {...register("industries")} id="ignore1" type="text" className="form-control" />
 
           <label htmlFor="additional2" className="form-label">
             What challenges are you facing in your career transition?
           </label>
-          <input {...register("modifier")} id="additional2" type="text" className="form-control" />
+          <input {...register("challenges")} id="additional2" type="text" className="form-control" />
 
           <label htmlFor="additional3" className="form-label">
             What additional skills or knowledge do you think you need?
           </label>
-          <input {...register("modifier")} id="additional3" type="text" className="form-control" />
+          <input {...register("additional")} id="additional3" type="text" className="form-control" />
 
           <label htmlFor="additional4" className="form-label">
             Are there any specific job roles you're aiming for?
           </label>
-          <input {...register("modifier")} id="additional4" type="text" className="form-control" />
+          <input {...register("specific")} id="additional4" type="text" className="form-control" />
 
           <label htmlFor="additional5" className="form-label">
             How soon are you planning to make this career transition?
           </label>
-          <input {...register("modifier")} id="additional5" type="text" className="form-control" />
+          <input {...register("time")} id="additional5" type="text" className="form-control" />
 
           <label htmlFor="additional6" className="form-label">
             Do you have any preferences regarding remote or in-office work?
           </label>
-          <input {...register("modifier")} id="additional6" type="text" className="form-control" />
+          <input {...register("pref")} id="additional6" type="text" className="form-control" />
 
         </div>
 

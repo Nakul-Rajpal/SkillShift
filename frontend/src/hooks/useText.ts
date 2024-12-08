@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { createService } from "../services/backend-service.ts";
-import { CanceledError } from "../services/api-client.ts";
-import { ServiceCategory } from "../types.ts";
+import { createService } from "../services/backend-service";
+import { CanceledError } from "../services/api-client";
+import { ServiceCategory } from "../types";
 
 
 const useText = (info: string, serviceString: ServiceCategory) =>{
