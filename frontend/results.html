@@ -11,53 +11,62 @@
 <div class="grid-container">
   
   <!-- Section: Future Industries -->
-  <div class="left-box">
-    <h2>Your Future Industries</h2>
-    <p id="future-industries">Details about industries where your skills and interests are a good match.</p>
-  </div>
-
-  <!-- Section: Skills Needed -->
-  <div class="left-box">
-    <h2>Skills Needed</h2>
-    <p id="skills-content">Key skills to develop for entering your chosen industries.</p>
-  </div>
-
-  <!-- Section: Job Market Stats -->
-  <div class="left-box">
-    <h2>Stats About the Job Market</h2>
-    <p id="job-market-stats">Data on job trends and opportunities in your areas of interest.</p>
-  </div>
-
-  <!-- Section: Online Courses -->
-  <div class="right-box">
-    <h2>Online Courses</h2>
-    <ul id="online-courses"></ul>
-  </div>
+  <div class="grid-container">
+    <div id="future-industries"></div>
+    <div id="skills-content"></div>
+    <div id="job-market-stats"></div>
+    <div id="online-courses"></div>
+</div>
 
 </div>
 <script>
-  window.addEventListener('load', () => {
+function formatResponse(content) {
+    // Convert **text** to <b>text</b>
+    let formattedContent = content.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
+    
+    // Convert *text* to <i>text</i>
+    formattedContent = formattedContent.replace(/\*(.*?)\*/g, '<i>$1</i>');
+    
+    // Replace '\n' with actual line breaks
+    formattedContent = formattedContent.replace(/\\n/g, '<br>');
+    
+    // Replace '\t' with a fixed-width space for indentation
+    formattedContent = formattedContent.replace(/\\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;');
+    
+    // Convert "- " or list items to <li> elements
+    formattedContent = formattedContent.replace(/- (.*?)<br>/g, '<li>$1</li>');
+    
+    // Wrap lists in <ul> tags
+    formattedContent = formattedContent.replace(/(<li>.*?<\/li>)/g, '<ul>$1</ul>');
+
+    return formattedContent;
+}
+
+window.addEventListener('load', () => {
     const futureIndustries = localStorage.getItem('futureIndustries');
     const jobMarketStats = localStorage.getItem('jobMarketStats');
     const skillsNeeded = localStorage.getItem('skillsNeeded');
     const onlineCourses = localStorage.getItem('onlineCourses');
 
     if (futureIndustries && jobMarketStats && skillsNeeded && onlineCourses) {
-      document.getElementById('future-industries').textContent = futureIndustries;
-      document.getElementById('job-market-stats').textContent = jobMarketStats;
-      document.getElementById('skills-content').textContent = skillsNeeded;
-      
-      const coursesList = document.getElementById('online-courses');
-      coursesList.innerHTML = onlineCourses.split('\n').map(course => `<li>${course}</li>`).join('');
-      
-      localStorage.removeItem('futureIndustries');
-      localStorage.removeItem('jobMarketStats');
-      localStorage.removeItem('skillsNeeded');
-      localStorage.removeItem('onlineCourses');
+        document.getElementById('future-industries').innerHTML = `<div class="section"><h2>Your Future Industries</h2><p>${formatResponse(futureIndustries)}</p></div>`;
+        document.getElementById('job-market-stats').innerHTML = `<div class="section"><h2>Stats About the Job Market</h2><p>${formatResponse(jobMarketStats)}</p></div>`;
+        document.getElementById('skills-content').innerHTML = `<div class="section"><h2>Skills Needed</h2><p>${formatResponse(skillsNeeded)}</p></div>`;
+        
+        const coursesList = document.getElementById('online-courses');
+        const courses = formatResponse(onlineCourses);
+        coursesList.innerHTML = `<div class="section"><h2>Online Courses</h2>${courses}</div>`;
+        
+        // Clear local storage
+        localStorage.removeItem('futureIndustries');
+        localStorage.removeItem('jobMarketStats');
+        localStorage.removeItem('skillsNeeded');
+        localStorage.removeItem('onlineCourses');
     } else {
-      document.getElementById('skills-content').textContent = 'No results available.';
+        document.getElementById('skills-content').innerHTML = `<div class="section"><p>No results available.</p></div>`;
     }
-  });
+});
+
 </script>
 <script type="module" src="/src/main.tsx"></script>
 </body>
