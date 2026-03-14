@@ -1,19 +1,32 @@
+/*
+ * @file App.css
+ * @project SkillShift
+ * @author Nakul Rajpal
+ * @created 2026-03-14
+ * @description Component-level styles for the React application. Overrides
+ *              Bootstrap defaults for forms, buttons, inputs, spinners, and
+ *              the expandable text component with a pastel-themed UI.
+ */
+
+/* Kirby Air Riders Themed UI */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+
 /* General app container */
 .app-container {
-  font-family: 'Roboto', sans-serif;
-  max-width: 100%; /* Fullscreen width */
+  font-family: 'Nunito', sans-serif;
+  max-width: 100%;
   margin: 0;
   padding: 20px;
-  background-color: #333; /* Dark input background */
-  min-height: 100vh; /* Fullscreen height */
+  background: linear-gradient(135deg, #ffe4f0 0%, #e0f0ff 50%, #e8ffe4 100%);
+  min-height: 100vh;
   box-sizing: border-box;
 }
 
 .body {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Nunito', sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #333; /* Dark input background */
+  background: linear-gradient(135deg, #ffe4f0 0%, #e0f0ff 50%, #e8ffe4 100%);
 }
 
 .grid-container {
@@ -22,19 +35,21 @@
   grid-template-rows: auto auto auto;
   gap: 20px;
   padding: 20px;
-  color: #121212
+  color: #4a3560;
 }
 
 .left-box, .right-box {
-  background-color: #1a1a1a; /* Darker box background */
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.5);
+  background-color: rgba(255, 255, 255, 0.85);
+  padding: 24px;
+  border-radius: 20px;
+  box-shadow: 0px 4px 16px rgba(200, 140, 200, 0.25);
+  border: 2px solid rgba(255, 180, 210, 0.4);
 }
 
 .h2 {
   margin-top: 0;
-  color: #bb86fc; /* Accent color for headings */
+  color: #e8457c;
+  font-weight: 800;
 }
 
 .ul li {
@@ -43,89 +58,176 @@
 }
 
 .ul li::before {
-  content: "• ";
-  color: #bb86fc; /* Accent color for bullet points */
+  content: "\2605 ";
+  color: #ffb347;
 }
 
 @media (max-width: 768px) {
   .grid-container {
-      grid-template-columns: 1fr;
-      grid-template-rows: auto;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
   }
 
   .right-box {
-      grid-row: auto;
+    grid-row: auto;
   }
 }
 
-/* Form Styling */
+/* ===== Form Styling (high specificity to override Bootstrap) ===== */
+
 form {
-  background-color: #333; /* Dark input background */
-  border-radius: 10px;
-  padding: 20px;
+  background: rgba(255, 255, 255, 0.92) !important;
+  border-radius: 24px !important;
+  padding: 36px !important;
   width: calc(100% - 40px);
   margin: 0 auto;
-  max-width: none;
-  color: #333; /* Dark input background */
+  max-width: 800px;
+  color: #4a3560 !important;
+  box-shadow: 0px 6px 24px rgba(200, 140, 200, 0.2) !important;
+  border: 2px solid rgba(255, 180, 210, 0.3) !important;
+  font-family: 'Nunito', sans-serif !important;
 }
 
-input[type="text"] {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
-  border: none; /* Simplified input style */
-  border-radius: 5px;
-  font-size: 16px;
-  transition: border-color 0.3s ease-in-out;
-  color: #ffffff; /* White input text color */
+/* Form labels - override Bootstrap .form-label */
+form .form-label,
+form label.form-label,
+label.form-label {
+  color: #6b4080 !important;
+  font-weight: 700 !important;
+  font-family: 'Nunito', sans-serif !important;
+  margin-bottom: 6px !important;
+  margin-top: 14px !important;
+  display: block !important;
+  font-size: 15px !important;
 }
 
-input[type="text"]:focus {
-  border-color: #bb86fc; /* Accent color for focus */
-  outline: none;
+/* Form inputs - override Bootstrap .form-control */
+form .form-control,
+input.form-control,
+input[type="text"].form-control {
+  width: 100% !important;
+  padding: 12px 16px !important;
+  margin-bottom: 4px !important;
+  border: 2px solid #f0d0e8 !important;
+  border-radius: 14px !important;
+  font-size: 16px !important;
+  font-family: 'Nunito', sans-serif !important;
+  transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease !important;
+  color: #4a3560 !important;
+  background-color: #fef6fb !important;
 }
 
-button[type="submit"] {
-  background-color: #bb86fc; /* Accent button color */
-  color: white;
-  padding: 12px;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
+form .form-control:focus,
+input.form-control:focus,
+input[type="text"].form-control:focus {
+  border-color: #e8457c !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(232, 69, 124, 0.15) !important;
+  background-color: #fff !important;
 }
 
-button[type="submit"]:hover {
-  background-color: #9b6bc7; /* Slightly darker on hover */
+form .form-control::placeholder {
+  color: #c8a0c0 !important;
+  opacity: 0.7 !important;
 }
 
+/* Submit button - override Bootstrap .btn .btn-primary */
+form .btn.btn-primary,
+form button.btn.btn-primary,
+button.btn.btn-primary {
+  background: linear-gradient(135deg, #ff7eb3, #ff4081) !important;
+  color: white !important;
+  padding: 14px 40px !important;
+  border-radius: 50px !important;
+  border: none !important;
+  cursor: pointer !important;
+  font-size: 17px !important;
+  font-family: 'Nunito', sans-serif !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.5px !important;
+  box-shadow: 0 4px 14px rgba(255, 64, 129, 0.3) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+  display: block !important;
+  margin: 24px auto 0 auto !important;
+  text-transform: uppercase !important;
+}
+
+form .btn.btn-primary:hover,
+form button.btn.btn-primary:hover,
+button.btn.btn-primary:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 18px rgba(255, 64, 129, 0.4) !important;
+  background: linear-gradient(135deg, #ff99c8, #ff4081) !important;
+}
+
+form .btn.btn-primary:active,
+button.btn.btn-primary:active {
+  transform: translateY(0) !important;
+}
+
+/* Secondary button - override Bootstrap .btn-secondary */
+.btn.btn-secondary,
+button.btn.btn-secondary {
+  background: linear-gradient(135deg, #82d4f2, #5bb8e8) !important;
+  color: white !important;
+  padding: 8px 20px !important;
+  border-radius: 50px !important;
+  border: none !important;
+  cursor: pointer !important;
+  font-family: 'Nunito', sans-serif !important;
+  font-weight: 700 !important;
+  box-shadow: 0 3px 8px rgba(91, 184, 232, 0.3) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.btn.btn-secondary:hover,
+button.btn.btn-secondary:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 5px 12px rgba(91, 184, 232, 0.4) !important;
+}
+
+/* Error text */
 .text-danger {
-  color: #ff5252; /* Bright red for errors */
+  color: #e84545 !important;
+  background: #fff0f0 !important;
+  padding: 10px 16px !important;
+  border-radius: 12px !important;
+  border: 1px solid #ffd0d0 !important;
+  font-weight: 600 !important;
 }
 
+/* Loading spinner */
 .spinner-border {
-  display: block;
-  margin: auto;
+  display: block !important;
+  margin: 20px auto !important;
+  color: #e8457c !important;
 }
 
 form p {
-  text-align: center; 
-  font-size: larger; 
-  margin-bottom: 20px; 
+  text-align: center;
+  font-size: larger;
+  margin-bottom: 20px;
+  color: #6b4080;
 }
 
+/* Expandable text */
 .expandable-text {
-  background-color: #1a1a1a; /* Match with form and box background */
-  padding: 20px; 
-  margin-top:20px; 
-  width: calc(100% - 40px); 
-  border-radius: 10px; 
-  box-shadow: rgba(0,0,0,0.15) -4px -4px -8px inset;
-
-  max-width:none; 
+  background: rgba(255, 255, 255, 0.85);
+  padding: 20px;
+  margin-top: 20px;
+  width: calc(100% - 40px);
+  border-radius: 20px;
+  box-shadow: 0px 4px 16px rgba(200, 140, 200, 0.2);
+  border: 2px solid rgba(255, 180, 210, 0.3);
+  max-width: none;
 }
 
 .expandable-text p {
-  text-align:center; 
-  color:#ffffff; /* Ensure expandable text is white */
+  text-align: center;
+  color: #4a3560;
+}
+
+/* Bootstrap margin override for form group */
+.mb-3 {
+  margin-bottom: 0.5rem !important;
 }

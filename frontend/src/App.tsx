@@ -1,30 +1,31 @@
+/**
+ * @file App.tsx
+ * @project SkillShift
+ * @author Nakul Rajpal
+ * @created 2026-03-14
+ * @description Root application component that renders the career transition query form.
+ */
+
 import "./styles.css";
+import "./App.css";
 
 import QueryForm from "./components/QueryForm";
-import useText from "./hooks/useText";
-import { useEffect } from "react";
 
+/**
+ * Root application component.
+ * Renders the QueryForm for user input.
+ *
+ * @returns {JSX.Element} The top-level application layout.
+ *
+ * @example
+ * <App />
+ */
 function App() {
-  const { text, textError, textIsLoading } = useText("", "chatroom-image");
-
-  useEffect(() => {
-    console.log(text);
-  }, [text]);
-
   return (
     <div>
-      {(textIsLoading) && <div className="spinner-border" />}
-      <br />
       <QueryForm />
-      <br />
     </div>
   );
 }
 
 export default App;
-
-/**
- * <QueryForm />
-      <br />
-      <ChatRoom />
- */

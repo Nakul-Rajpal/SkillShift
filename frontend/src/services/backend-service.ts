@@ -1,31 +1,44 @@
 /**
- * Contains the class definition for HttpService class, and service routes.
- * HttpService provides easy extension for additional routes.
- * @author Christopher Curtis
+ * @file backend-service.ts
+ * @project SkillShift
+ * @author Nakul Rajpal
+ * @created 2026-03-14
+ * @description Defines the HttpService class and factory functions for creating
+ *              service instances that communicate with the Express backend.
  */
-import { Message, ServiceCategory } from "../types";
+
+import { ServiceCategory } from "../types";
 import apiClient from "./api-client";
 
 /**
- * Defines a resuable HTTP-Service class.
- * Contains a post method.
+ * Reusable HTTP service class.
+ * Wraps Axios calls with AbortController support for cancellation.
  */
 class HttpService {
     endpoint: string;
 
     /**
-     * Constructs an HTTP service object. Base URL is defined the api-client file.
-     * Directs requests to provided endpoint of the base url.
-     * @param endpoint the target route to post to
+     * Creates an HttpService bound to the given endpoint.
+     * The base URL is defined in the api-client module.
+     *
+     * @param {string} endpoint - The target API route (e.g., "/response").
+     *
+     * @example
+     * const svc = new HttpService("/response");
      */
     constructor(endpoint: string) {
         this.endpoint = endpoint;
     }
 
     /**
-     * Performs a post request and loads in the provided message histroy
-     * @param messages message history to 
-     * @returns response object from endpoint, and abort logic
+     * Performs a GET request, appending `info` to the endpoint path.
+     *
+     * @param {string} info - The path segment appended after the endpoint.
+     * @returns {{ request: Promise, cancel: Function }} The Axios promise and an abort function.
+     *
+     * @example
+     * const { request, cancel } = service.get("some-id");
+     * request.then(res => console.log(res.data));
      */
     get(info: string) {
         const controller = new AbortController();
@@ -34,26 +47,14 @@ class HttpService {
     }
 
     /**
-     * Performs a post request and loads in the provided message histroy
-     * @param messages message history to 
-     * @returns response object from endpoint, and abort logic
-     */
-    getImage(info: string) {
-        const controller = new AbortController();
-        const request = apiClient.get(this.endpoint + "/" + info, { signal: controller.signal, responseType: 'blob' });
-        return { request, cancel: () => controller.abort() };
-    }
-
-    post(data: any) {
-        const controller = new AbortController();
-        const request = apiClient.post(this.endpoint, { params: data, signal: controller.signal });
-        return { request, cancel: () => controller.abort() };
-    }
-
-    /**
-     * Performs a post request and loads in the provided message histroy
-     * @param messages message history to 
-     * @returns response object from endpoint, and abort logic
+     * Performs a POST request with a structured message history array.
+     * Used for sending conversation context to the GPT backend.
+     *
+     * @param {Array<{role: string, content: string}>} messages - The conversation message history.
+     * @returns {{ request: Promise, cancel: Function }} The Axios promise and an abort function.
+     *
+     * @example
+     * const { request } = service.postMessages([{ role: "user", content: "Hello" }]);
      */
     postMessages(messages: { role: string; content: string; }[]) {
         const controller = new AbortController();
@@ -63,56 +64,28 @@ class HttpService {
 }
 
 /**
- * Creates a connection for unmodfied chat interactions.
- * @returns new HttpService object to the default response route.
+ * Creates an HttpService for unmodified chat interactions.
+ *
+ * @returns {HttpService} Service pointing to the "/response" route.
+ *
+ * @example
+ * const svc = createResponseService();
  */
 const createResponseService = () => {
     return new HttpService("/response");
 }
 
 /**
- * Creates a connection for parentally controlled interactions.
- * @returns new HttpService object to the parental route.
+ * Generic factory that creates an HttpService for any valid service category.
+ *
+ * @param {ServiceCategory} type - The service category used to build the route.
+ * @returns {HttpService} Service pointing to the "/<type>" route.
+ *
+ * @example
+ * const svc = createService("response");
  */
-const createParentalService = () => {
-    return new HttpService("/parental");
-}
- 
-const createImageResponseService = () => {
-    return new HttpService("/image");
-}
-
-/**
- * Creates a connection for gpt interactions with specific domain knowledge.
- * @returns new HttpService object to the expert route.
- */
-const createExpertResponseService = () => {
-    return new HttpService("/expert");
-}
-
-const createImageService = () => {
-    return new HttpService("/image");
-}
-
-const createSampleImageService = () => {
-    return new HttpService("/sample-image");
-}
-
 const createService = (type: ServiceCategory) => {
     return new HttpService("/" + type);
 }
 
-const postPayload = (type: ServiceCategory, payload: Message[]) => {
-    const {request, cancel} = createService(type).postMessages(payload);
-    return { request, cancel };
-}
-
-/**
- * Creates a connection for sending user "likes".
- * @returns new HttpService object to the "like" route.
- */
-const createLikeService = () => {
-    return new HttpService("/like");
-}
-
-export { createResponseService, createParentalService, createExpertResponseService, createLikeService, createSampleImageService, createImageService, postPayload, createService };
+export { createResponseService, createService };

@@ -1,33 +1,32 @@
 /**
- * Used for connecting to OpenAI.
- * Provides connection, and response function wrapper
+ * @file openaiService.js
+ * @project SkillShift
+ * @author Nakul Rajpal
+ * @created 2026-03-14
+ * @description Establishes the OpenAI client connection and exposes a wrapper
+ *              function for requesting chat completions from the GPT model.
  */
-import OpenAI from 'openai';
-import fs from 'fs';
 
-// Creates an OpenAI connection using the provided api key
+import OpenAI from 'openai';
+
+/** OpenAI client instance configured with the project API key. */
 const openai = new OpenAI({
     apiKey: ""
 });
 
 /**
- * Function for getting a response from the Llama model.
- * Uses the provided message history.
- * @param messages The message history to load in.
- * @returns Llama response object.
+ * Sends a message history to the GPT-4o-mini model and returns the completion.
+ *
+ * @param {Array<{role: string, content: string}>} messages - The conversation history to send.
+ * @returns {Promise<Object>} The full OpenAI chat completion response object.
+ *
+ * @example
+ * const response = await getResponse([{ role: "user", content: "Hello!" }]);
+ * console.log(response.choices[0].message.content);
  */
-
-const getResponse =  async (messages) => await openai.chat.completions.create({
+const getResponse = async (messages) => await openai.chat.completions.create({
     model: "gpt-4o-mini",
     messages: messages,
 });
-
-function base64_encode(file) {
-    // read binary data
-    var bitmap = fs.readFileSync(file);
-    // convert binary data to base64 encoded string
-    return new Buffer(bitmap).toString('base64');
-}
-
 
 export { getResponse };

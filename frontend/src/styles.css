@@ -1,4 +1,15 @@
-/* styles.css */
+/*
+ * @file styles.css
+ * @project SkillShift
+ * @author Nakul Rajpal
+ * @created 2026-03-14
+ * @description Global page-level styles including resets, navigation bar,
+ *              header, container layout, grid sections, results cards,
+ *              description hero, and responsive breakpoints.
+ */
+
+/* styles.css - Kirby Air Riders Theme */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
 
 /* General Reset */
 body, h1, h2, h3, p, ul, li, div, section {
@@ -8,49 +19,63 @@ body, h1, h2, h3, p, ul, li, div, section {
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Nunito', sans-serif;
     line-height: 1.6;
-    background-color: #f9f9f9;
-    color: #333;
+    background: linear-gradient(135deg, #ffe4f0 0%, #e0f0ff 50%, #e8ffe4 100%);
+    color: #4a3560;
     margin: 0;
     padding: 0;
+    min-height: 100vh;
 }
 
 /* Navigation Bar */
 .topnav {
-    background-color: #333;
+    background: linear-gradient(90deg, #ff7eb3, #82d4f2, #a0e8af);
     overflow: hidden;
     display: flex;
-    padding: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0 0 20px 20px;
+    box-shadow: 0 4px 12px rgba(200, 140, 200, 0.25);
 }
 
 .topnav a {
-    color: #f9f9f9;
+    color: #ffffff;
     padding: 0.75rem 1.5rem;
     text-decoration: none;
     text-align: center;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border-radius: 50px;
+    font-weight: 700;
+    margin: 0 4px;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.15);
 }
 
 .topnav a:hover {
-    background-color: #575757;
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
 }
 
 .topnav a.active {
-    background-color: #4CAF50;
+    background-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.3);
 }
 
 /* Header */
 header {
-    background-color: #4CAF50;
+    background: linear-gradient(135deg, #ff7eb3, #ff4081);
     color: white;
-    padding: 1.5rem 0;
+    padding: 2rem 1rem;
     text-align: center;
+    border-radius: 20px;
+    margin: 1rem;
+    box-shadow: 0 6px 20px rgba(255, 64, 129, 0.3);
 }
 
 header h1 {
     font-size: 2rem;
     margin-bottom: 0.5rem;
+    font-weight: 800;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 /* Main Content */
@@ -59,9 +84,10 @@ header h1 {
     max-width: 1200px;
     margin: 0 auto;
     padding: 1rem;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 24px;
+    box-shadow: 0 4px 20px rgba(200, 140, 200, 0.2);
+    border: 2px solid rgba(255, 180, 210, 0.3);
 }
 
 /* Sections */
@@ -72,32 +98,57 @@ section {
 section h2 {
     font-size: 1.5rem;
     margin-bottom: 1rem;
-    color: #4CAF50;
+    color: #e8457c;
+    font-weight: 800;
 }
 
 section p {
     margin-bottom: 1rem;
     font-size: 1rem;
+    color: #4a3560;
 }
 
 /* Grid Container */
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
     margin-top: 1.5rem;
+    padding: 1rem;
 }
 
 .grid-container div {
-    background: #e6f7ff;
-    padding: 1rem;
-    border: 1px solid #cce7f9;
-    border-radius: 5px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.9);
+    padding: 1.25rem;
+    border: 2px solid rgba(255, 180, 210, 0.3);
+    border-radius: 20px;
+    box-shadow: 0 4px 16px rgba(200, 140, 200, 0.15);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.grid-container div:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(200, 140, 200, 0.25);
+}
+
+.grid-container div:nth-child(1) {
+    border-top: 4px solid #ff7eb3;
+}
+
+.grid-container div:nth-child(2) {
+    border-top: 4px solid #82d4f2;
+}
+
+.grid-container div:nth-child(3) {
+    border-top: 4px solid #a0e8af;
+}
+
+.grid-container div:nth-child(4) {
+    border-top: 4px solid #ffcc70;
 }
 
 .grid-container div h2 {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
 }
 
 .grid-container div p {
@@ -106,13 +157,14 @@ section p {
 
 /* Footer Section */
 section#warning {
-    background: #ffefef;
-    color: #b30000;
-    padding: 1rem;
-    border-left: 4px solid #b30000;
-    border-radius: 4px;
+    background: #fff5e6;
+    color: #b36b00;
+    padding: 1rem 1.25rem;
+    border-left: 4px solid #ffb347;
+    border-radius: 12px;
     margin-top: 2rem;
     font-size: 0.9rem;
+    box-shadow: 0 2px 8px rgba(255, 179, 71, 0.15);
 }
 
 /* Responsive Design */
@@ -123,5 +175,109 @@ section#warning {
 
     .topnav a {
         padding: 0.5rem 1rem;
+    }
+}
+
+/* Links */
+a {
+    color: #e8457c;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: #ff7eb3;
+}
+
+/* Lists */
+ul {
+    padding-left: 1.5rem;
+}
+
+li {
+    margin-bottom: 0.4rem;
+}
+
+li::marker {
+    color: #ffb347;
+}
+
+/* ===== Description Hero Section ===== */
+.description-hero {
+    margin-bottom: 1.5rem;
+}
+
+.description-card {
+    background: rgba(255, 255, 255, 0.5);
+    border: 2px solid rgba(255, 180, 210, 0.3);
+    border-radius: 20px;
+    padding: 2rem 2rem 1.75rem;
+    text-align: center;
+}
+
+.description-title {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #e8457c;
+    margin-bottom: 0.75rem;
+}
+
+.description-text {
+    font-size: 1.05rem;
+    color: #5a4070;
+    line-height: 1.7;
+    max-width: 620px;
+    margin: 0 auto 1.25rem auto;
+}
+
+.description-text strong {
+    color: #e8457c;
+    font-weight: 700;
+}
+
+.description-features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.6rem;
+}
+
+.feature-chip {
+    background: rgba(255, 255, 255, 0.8);
+    border: 2px solid rgba(255, 180, 210, 0.3);
+    border-radius: 50px;
+    padding: 0.5rem 1.1rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #6b4080;
+    box-shadow: 0 2px 8px rgba(200, 140, 200, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.feature-chip:nth-child(1) { border-color: rgba(255, 126, 179, 0.4); }
+.feature-chip:nth-child(2) { border-color: rgba(130, 212, 242, 0.4); }
+.feature-chip:nth-child(3) { border-color: rgba(160, 232, 175, 0.4); }
+.feature-chip:nth-child(4) { border-color: rgba(255, 204, 112, 0.4); }
+
+.feature-chip:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(200, 140, 200, 0.18);
+}
+
+@media (max-width: 768px) {
+    .description-card {
+        padding: 1.5rem 1rem;
+    }
+
+    .description-title {
+        font-size: 1.2rem;
+    }
+
+    .description-text {
+        font-size: 0.95rem;
+    }
+
+    .feature-chip {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.9rem;
     }
 }

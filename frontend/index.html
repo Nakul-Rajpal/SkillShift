@@ -1,3 +1,13 @@
+<!--
+  @file index.html
+  @project SkillShift
+  @author Nakul Rajpal
+  @created 2026-03-14
+  @description Main landing page for the SkillShift application. Contains
+               the hero section describing the platform's AI-powered career
+               guidance features, mounts the React root, and displays a
+               disclaimer warning about AI-generated content accuracy.
+-->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -5,31 +15,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SkillShift: AI-Powered Career Guidance for Gig Workers</title>
     <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
     <div class="topnav">
       <a class="active" href="#home">Home</a>
       <a href="#About">About</a>
     </div>
-  </head>
-  <body>
     <div class="container">
       <header>
         <h1>SkillShift: AI-Powered Career Guidance for Gig Workers</h1>
       </header>
       <main>
-        <section id="description">
-          <p>Our platform leverages cutting-edge Large Language Models (LLMs) to guide you through the process of career transition. 
-            Whether you're a seasoned professional or a gig worker, our tool helps you understand how your existing skills can be applied in new and exciting industries.</p>
+        <section id="description" class="description-hero">
+          <div class="description-card">
+            <h2 class="description-title">Your Next Career Adventure Starts Here</h2>
+            <p class="description-text">Our platform leverages cutting-edge <strong>Large Language Models</strong> to guide you through your career transition. Whether you're a seasoned professional or a gig worker, we help you discover how your existing skills can unlock <strong>new and exciting industries</strong>.</p>
+            <div class="description-features">
+              <div class="feature-chip">Personalized Guidance</div>
+              <div class="feature-chip">Skill Gap Analysis</div>
+              <div class="feature-chip">Industry Insights</div>
+              <div class="feature-chip">Course Recommendations</div>
+            </div>
+          </div>
         </section>
       </main>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+      <div id="root"></div>
+      <script type="module" src="/src/main.tsx"></script>
 
-  <body>
-    <section id="warning">
-      <p>This AI tool is designed to provide explanations and insights regarding the use of ChatGPT-4. Please be aware that while the tool strives for accuracy, the responses generated may not always be correct or up-to-date. The AI's outputs are based on the data it has been trained on and may not reflect the most current information or context. Users should verify critical information independently and use this tool as a supplementary resource rather than a sole source of information. The developers are not liable for any inaccuracies or misunderstandings resulting from the use of this tool.</p>
-    </section>
-
+      <section id="warning">
+        <p>This AI tool is designed to provide explanations and insights regarding the use of ChatGPT-4. Please be aware that while the tool strives for accuracy, the responses generated may not always be correct or up-to-date. The AI's outputs are based on the data it has been trained on and may not reflect the most current information or context. Users should verify critical information independently and use this tool as a supplementary resource rather than a sole source of information. The developers are not liable for any inaccuracies or misunderstandings resulting from the use of this tool.</p>
+      </section>
+    </div>
   </body>
 </html>
