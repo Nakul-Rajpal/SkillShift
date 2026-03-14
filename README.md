@@ -17,19 +17,18 @@ $$\color{red}{
 ---
 
 ## Table of Contents
-1. [Overview](#overview)  
-2. [Setup Instructions](#setup-instructions)  
-   - [Prerequisites](#prerequisites)  
-   - [Installation Steps](#installation-steps)  
-3. [Usage](#usage)  
-4. [Contributing](#contributing)  
-5. [License](#license)  
+1. [Overview](#overview)
+2. [Setup Instructions](#setup-instructions)
+   - [Prerequisites](#prerequisites)
+   - [Installation Steps](#installation-steps)
+3. [Usage](#usage)
+4. [License](#license)
 
 ---
 
 ## Overview
 
-[cite_start]**SkillShift** is an AI-powered career guidance platform specifically designed to assist gig workers and seasoned professionals in transitioning to new industries[cite: 5, 6]. [cite_start]By leveraging Large Language Models (LLMs), the tool analyzes a user's current skills, job title, and preferences to provide in-depth insights into future industries, job market statistics, and required new skills[cite: 87, 92].
+**SkillShift** is an AI-powered career guidance platform specifically designed to assist gig workers and seasoned professionals in transitioning to new industries. By leveraging Large Language Models (LLMs), the tool analyzes a user's current skills, job title, and preferences to provide in-depth insights into future industries, job market statistics, and required new skills.
 
 ---
 
@@ -46,17 +45,51 @@ $$\color{red}{
 ### Prerequisites
 
 Before setting up, ensure the following are installed on your system:
-- [cite_start][Node.js](https://nodejs.org/) [cite: 1]
-- [cite_start][npm](https://www.npmjs.com/) [cite: 1]
-- [cite_start][Vite](https://vitejs.dev/) (included in devDependencies) [cite: 11]
+- [Node.js](https://nodejs.org/)
+- [npm](https://www.npmjs.com/)
+- [Vite](https://vitejs.dev/) (included in devDependencies)
 
 ### Installation Steps
 
-1. **Clone the Repository** Clone the project repository to your local machine.
+1. **Clone the Repository**
+   Clone the project repository to your local machine.
 
-2. [cite_start]**Install Dependencies** Navigate to the `frontend` and `server` directories separately and install the required dependencies[cite: 1]:  
+2. **Setup OpenAI Key**
+   Add your OpenAI API key to the `openaiService.js` file located in the `server` directory.
+
+3. **Install Nodemon Globally**
+   Ensure nodemon is installed globally to simplify server management:
    ```bash
-   cd frontend
-   npm install
-   cd ../server
-   npm install
+   npm install -g nodemon
+   ```
+
+4. **Start the Server**
+   Navigate to the `server` directory and run the server:
+   ```bash
+   cd server
+   nodemon index.js
+   ```
+
+5. **Start the Frontend**
+   Navigate to the `frontend` directory and run the development server:
+   ```bash
+   cd ../frontend
+   npm run dev
+   ```
+
+---
+
+## Usage
+
+1. Launch the server and frontend as outlined in the setup instructions.
+2. Open the provided link in your browser (typically `http://localhost:5173`).
+3. Enter your professional details into the form, including current job, skills, and target industries.
+4. Submit the form to receive an AI-generated career transition roadmap, including job market data and recommended courses.
+
+---
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+Feel free to adapt, modify, and use the project in your own applications while adhering to the license terms.
